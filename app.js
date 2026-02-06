@@ -1,66 +1,39 @@
 // app.js
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
+// Function to open the modal form
+function openForm() {
+    document.getElementById('formModal').style.display = 'block';
+}
 
-app.use(bodyParser.json());
+// Function to close the modal form
+function closeForm() {
+    document.getElementById('formModal').style.display = 'none';
+}
 
-// Form definitions
-const forms = {
-  kultur: {
-    fields: {
-      namaPasien: {
-        type: 'string',
-        required: true
-      },
-      tanggalLahirPasien: {
-        type: 'date',
-        required: true
-      },
-      nomorRekamMedis: {
-        type: 'string',
-        required: true
-      },
-      dpjp: {
-        type: 'string',
-        required: true
-      },
-      diagnosa: {
-        type: 'string',
-        required: true
-      },
-      kulturYangDiminta: {
-        type: 'string',
-        required: true
-      },
-      jenisKultur: {
-        type: 'string',
-        required: true
-      },
-      hasilKultur: {
-        type: 'string',
-        required: true
-      },
-      bakteriJamurYangTeridentifikasi: {
-        type: 'string',
-        required: true
-      },
-      antibiotikResisten: {
-        type: 'string',
-        required: true
-      }
-    }
-  }
-};
+// Function to submit the form
+function submitForm() {
+    const formData = {
+        namaPasien: document.getElementById('namaPasien').value,
+        tanggalLahir: document.getElementById('tanggalLahir').value,
+        nomorRekamMedis: document.getElementById('nomorRekamMedis').value,
+        dpjp: document.getElementById('dpjp').value,
+        diagnosa: document.getElementById('diagnosa').value,
+        kulturDiminta: document.getElementById('kulturDiminta').value,
+        jenisKultur: document.getElementById('jenisKultur').value,
+        hasilKultur: document.getElementById('hasilKultur').value,
+        bakteriJamur: document.getElementById('bakteriJamur').value,
+        antibiotikResisten: document.getElementById('antibiotikResisten').value
+    };
 
-app.post('/submit-kultur', (req, res) => {
-  // Handle form submission
-  const { namaPasien, tanggalLahirPasien, nomorRekamMedis, dpjp, diagnosa, kulturYangDiminta, jenisKultur, hasilKultur, bakteriJamurYangTeridentifikasi, antibiotikResisten } = req.body;
-  // Process the form data here, e.g., save to database
-  res.send('Form submitted successfully');
-});
+    // Save data to local storage
+    localStorage.setItem('formData', JSON.stringify(formData));
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
-});
+    // Optionally: close the form after submission
+    closeForm();
+    alert('Form submitted successfully!');
+}
+
+// Add event listeners to handle form open/close
+document.getElementById('openFormButton').addEventListener('click', openForm);
+document.getElementById('closeFormButton').addEventListener('click', closeForm);
+document.getElementById('submitFormButton').addEventListener('click', submitForm);
